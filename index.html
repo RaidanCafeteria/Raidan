@@ -154,9 +154,8 @@ footer{background:#9f0000;color:#fff;margin-top:50px;padding:34px 18px}
       <div class="form">
         <div class="field"><label>Name *</label><input id="customerName" placeholder="Your name"></div>
         <div class="field"><label>Phone *</label><input id="customerPhone" placeholder="+7 ..."></div>
-        <div class="field full"><label>Order type *</label><select id="orderType"><option value="Dine in">Dine in</option><option value="Take away">Take away</option><option value="Delivery">Delivery</option></select></div>
-        <div class="field full"><label>Payment *</label><select id="payment"><option value="Online">Online</option><option value="Cash">Cash</option></select></div>
-        <div class="field full"><label>Hostel / room (optional)</label><input id="room" placeholder="Hostel or room number"></div>
+        <div class="field full"><label>Order type</label><input id="orderType" value="Delivery" readonly></div>
+        <div class="field full"><label>Payment</label><input id="payment" value="Online" readonly></div>
         <div class="field full"><label>Notes (optional)</label><textarea id="notes" rows="3" placeholder="Any special request?"></textarea></div>
       </div>
       <button class="whatsapp" style="margin-top:14px" onclick="sendWhatsApp()">📲 Send Order to WhatsApp</button>
@@ -259,7 +258,6 @@ function sendWhatsApp(){
   const phone=document.getElementById("customerPhone").value.trim();
   const orderType=document.getElementById("orderType").value;
   const payment=document.getElementById("payment").value;
-  const room=document.getElementById("room").value.trim();
   const notes=document.getElementById("notes").value.trim();
   if(!name||!phone){toast("Please enter your name and phone");return}
   const orderId=makeOrderId();
@@ -272,7 +270,6 @@ function sendWhatsApp(){
   items.forEach(p=>{msg+=`• ${p.name} × ${cart[p.id]} — ${money(p.price*cart[p.id])}%0A`});
   msg+=`%0A*TOTAL: ${money(total())}*%0A%0A`;
   msg+=`Name: ${name}%0APhone: ${phone}`;
-  if(room)msg+=`%0AHostel / Room: ${room}`;
   if(notes)msg+=`%0ANotes: ${notes}`;
   msg+=`%0A%0A__`;
   const url=`https://wa.me/${WHATSAPP}?text=${msg}`;
